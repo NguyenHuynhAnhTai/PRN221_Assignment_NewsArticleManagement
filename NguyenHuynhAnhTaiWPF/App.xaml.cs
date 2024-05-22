@@ -28,8 +28,8 @@ namespace Exercise
 
         private void OnStartUp(Object sender, StartupEventArgs e)
         {
-            var mainWindow = serviceProvider.GetService<LoginWindow>(); // Lấy dịch vụ, sử dụng
-            mainWindow.Show(); //Hiển thị cửa sổ (main window khi start up)
+            var loginWindow = serviceProvider.GetService<LoginWindow>(); // Lấy dịch vụ, sử dụng
+            loginWindow.Show(); //Hiển thị cửa sổ (main window khi start up)
         }
     }
 
