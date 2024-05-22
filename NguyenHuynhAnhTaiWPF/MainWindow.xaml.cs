@@ -1,5 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using BusinessObjects.Entities;
+using Services.Interfaces;
+using System.Windows;
 
 namespace NguyenHuynhAnhTaiWPF
 {
@@ -8,39 +9,33 @@ namespace NguyenHuynhAnhTaiWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly SystemAccount userAccount;
+
+        private readonly ISystemAccountService iSystemAccountService;
+
+        public MainWindow(SystemAccount systemAccount, ISystemAccountService systemAccountService)
         {
             InitializeComponent();
+            userAccount = systemAccount;
+            iSystemAccountService = systemAccountService;
+
+            LoadData();
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
-        {
-
+        private void LoadData()
+        {   
+            var account = iSystemAccountService.GetAccountById(userAccount.AccountId);
+            txtID.Text = account.AccountId.ToString();
+            if (account.AccountRole == 1)
+                txtRole.Text = "staff";
+            txtEmail.Text = account.AccountEmail;
+            txtName.Text = account.AccountName;
+            txtPassword.Password = account.AccountPassword;
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void btnCreate_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void dgData_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
+            new UpdateAccountWindow(userAccount, iSystemAccountService).Show();
         }
     }
 }

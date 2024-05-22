@@ -6,16 +6,16 @@ namespace Services.Implementations
 {
     public class CategoryService : ICategoryService
     {
-        private readonly ICategoryService iCategoryService;
+        private readonly ICategoryRepository iCategoryRepository;
 
-        public CategoryService(ICategoryService categoryService)
+        public CategoryService(ICategoryRepository categoryRepository)
         {
-            iCategoryService = categoryService;
+            iCategoryRepository = categoryRepository;
         }
 
         public List<Category> GetCategories() 
         {
-            return iCategoryService.GetCategories(); 
+            return iCategoryRepository.GetCategories(); 
         }
     }
 }

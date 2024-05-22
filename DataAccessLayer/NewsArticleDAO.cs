@@ -1,25 +1,26 @@
 ﻿using BusinessObjects.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer
 {
     public class NewsArticleDAO
     {
-        public static List<NewsArticle> GetProducts()
+        public static List<NewsArticle> GetNewsArticles()
         {
-            var listProducts = new List<NewsArticle>();
+            var listNewsArticles = new List<NewsArticle>();
             try
             {
                 using var db = new FunewsManagementDbContext();
-                listProducts = db.NewsArticles.ToList();
+                listNewsArticles = db.NewsArticles.ToList();
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-            return listProducts;
+            return listNewsArticles;
         }
 
-        public static void SaveProduct(NewsArticle p)
+        public static void SaveNewsArticle(NewsArticle p)
         {
             try
             {
@@ -33,12 +34,12 @@ namespace DataAccessLayer
             }
         }
 
-        public static void UpdateProduct(NewsArticle p)
+        public static void UpdateNewsArticle(NewsArticle p)
         {
             try
             {
                 using var db = new FunewsManagementDbContext();
-                db.Entry<NewsArticle>(p).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.Entry<NewsArticle>(p).State = EntityState.Modified;
                 db.SaveChanges();
             }
             catch (Exception ex)
@@ -47,7 +48,7 @@ namespace DataAccessLayer
             }
         }
 
-        public static void DeleteProduct(NewsArticle p)
+        public static void DeleteNewsArticle(NewsArticle p)
         {
             try
             {
@@ -62,7 +63,7 @@ namespace DataAccessLayer
             }
         }
 
-        public static NewsArticle GetProductById(int id)
+        public static NewsArticle GetNewsArticleById(int id)
         {
             using var db = new FunewsManagementDbContext();
             return db.NewsArticles.FirstOrDefault(x => x.NewsArticleId.Equals(id));

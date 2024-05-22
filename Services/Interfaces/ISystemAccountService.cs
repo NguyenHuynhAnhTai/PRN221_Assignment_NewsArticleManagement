@@ -4,6 +4,8 @@ namespace Services.Interfaces
 {
     public interface ISystemAccountService
     {
-        SystemAccount GetAccountById(string accountID);
+        void UpdateAccount(SystemAccount account);
+        SystemAccount GetAccountById(short accountID);
+        SystemAccount? GetAccountByEmailAndPass(string email, string password);
     }
 }

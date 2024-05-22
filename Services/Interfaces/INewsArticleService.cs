@@ -4,10 +4,10 @@ namespace Services.Interfaces
 {
     public interface INewsArticleService
     {
-        void SaveProduct(NewsArticle p);
-        void DeleteProduct(NewsArticle p);
-        void UpdateProduct(NewsArticle p);
-        List<NewsArticle> GetProducts();
-        NewsArticle GetProductById(int id);
+        void SaveNewsArticle(NewsArticle p);
+        void DeleteNewsArticle(NewsArticle p);
+        void UpdateNewsArticle(NewsArticle p);
+        List<NewsArticle> GetNewsArticles();
+        NewsArticle GetNewsArticleById(int id);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NguyenHuynhAnhTaiWPF;
+using Repositories.Implementations;
+using Repositories.Interfaces;
 using Services.Implementations;
 using Services.Interfaces;
 using System.Windows;
@@ -21,8 +23,16 @@ namespace Exercise
             services.AddSingleton(typeof(ICategoryService), typeof(CategoryService));
             services.AddSingleton(typeof(ISystemAccountService), typeof(SystemAccountService));
             services.AddSingleton(typeof(ITagService), typeof(TagService));
+
+            services.AddSingleton(typeof(ITagRepository), typeof(TagRepository));
+            services.AddSingleton(typeof(ICategoryRepository), typeof(CategoryRepository));
+            services.AddSingleton(typeof(ISystemAccountRepository), typeof(SystemAccountRepository));
+            services.AddSingleton(typeof(INewsArticleRepository), typeof(NewsArticleRepository));
+
             services.AddSingleton<LoginWindow>();
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<NewsArticleManagementWindow>();
+
             serviceProvider = serviceProvider ?? services.BuildServiceProvider(); // tao doi tuong cung cap dich vu
         }
 

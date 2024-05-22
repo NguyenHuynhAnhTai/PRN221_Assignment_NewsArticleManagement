@@ -1,40 +1,41 @@
 ﻿using BusinessObjects.Entities;
+using Repositories.Interfaces;
 using Services.Interfaces;
 
 namespace Services.Implementations
 {
     public class NewsArticleService : INewsArticleService
     {
-        private readonly INewsArticleService iProductService;
+        private readonly INewsArticleRepository iNewsArticleRepository;
 
-        public NewsArticleService(INewsArticleService productService)
+        public NewsArticleService(INewsArticleRepository newsArticleRepository)
         {
-            iProductService = productService;
+            iNewsArticleRepository = newsArticleRepository;
         }
 
-        public void DeleteProduct(NewsArticle p)
+        public void DeleteNewsArticle(NewsArticle p)
         {
-            iProductService.DeleteProduct(p);
+            iNewsArticleRepository.DeleteNewsArticle(p);
         }
 
-        public NewsArticle GetProductById(int id)
+        public NewsArticle GetNewsArticleById(int id)
         {
-            return iProductService.GetProductById(id);
+            return iNewsArticleRepository.GetNewsArticleById(id);
         }
 
-        public List<NewsArticle> GetProducts()
+        public List<NewsArticle> GetNewsArticles()
         {
-            return iProductService.GetProducts();
+            return iNewsArticleRepository.GetNewsArticles();
         }
 
-        public void SaveProduct(NewsArticle p)
+        public void SaveNewsArticle(NewsArticle p)
         {
-            iProductService.SaveProduct(p);
+            iNewsArticleRepository.SaveNewsArticle(p);
         }
 
-        public void UpdateProduct(NewsArticle p)
+        public void UpdateNewsArticle(NewsArticle p)
         {
-            iProductService.UpdateProduct(p);
+            iNewsArticleRepository.UpdateNewsArticle(p);
         }
     }
 }

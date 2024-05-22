@@ -1,20 +1,20 @@
 ﻿using BusinessObjects.Entities;
-using Services.Interfaces;
+using Repositories.Interfaces;
 
 namespace Services.Implementations
 {
     public class TagService
     {
-        private readonly ITagService iTagService;
+        private readonly ITagRepository iTagRepository;
 
-        public TagService(ITagService tagService)
+        public TagService(ITagRepository tagRepository)
         {
-            iTagService = tagService;
+            iTagRepository = tagRepository;
         }
 
         public List<Tag> GetTags()
         {
-            return iTagService.GetTags();
+            return iTagRepository.GetTags();
         }
     }
 }
