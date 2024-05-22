@@ -6,16 +6,16 @@ namespace Services.Implementations
 {
     public class SystemAccountService : ISystemAccountService
     {
-        private readonly ISystemAccountRepository iAccountRepository;
+        private readonly ISystemAccountService iAccountService;
 
-        public SystemAccountService(ISystemAccountRepository accountRepository)
+        public SystemAccountService(ISystemAccountService accountService)
         {
-            iAccountRepository = accountRepository;
+            iAccountService = accountService;
         }
 
         public SystemAccount GetAccountById(string accountID)
         {
-            return iAccountRepository.GetAccountById(accountID);
+            return iAccountService.GetAccountById(accountID);
         }
     }
 }
