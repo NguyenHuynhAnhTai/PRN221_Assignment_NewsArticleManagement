@@ -81,56 +81,50 @@ namespace NguyenHuynhAnhTaiWPF
                                                        MessageBoxButton.OK,
                                                        MessageBoxImage.Information);
                 this.Hide();
+                ResetInput();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            finally
-            {
-                ResetInput();
             }
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-                try
+            try
+            {
+                var updateArticle = StaticArticleInformation.ArticleInfo;
+                var inputedCategory = cboCategory.SelectedItem as Category;
+                var createdBy = StaticUserInformation.UserInfo;
+                var selectedTags = lboTag.Items.OfType<TagItem>().Where(t => t.IsSelected).Select(t => new Tag
                 {
-                    var updateArticle = StaticArticleInformation.ArticleInfo;
-                    var inputedCategory = cboCategory.SelectedItem as Category;
-                    var createdBy = StaticUserInformation.UserInfo;
-                    var selectedTags = lboTag.Items.OfType<TagItem>().Where(t => t.IsSelected).Select(t => new Tag
-                    {
-                        TagId = t.TagId,
-                        TagName = t.TagName,
-                    }).ToList();
+                    TagId = t.TagId,
+                    TagName = t.TagName,
+                }).ToList();
 
-                    var article = new NewsArticle
-                    {
-                        NewsArticleId = txtID.Text,
-                        NewsTitle = txtNewsArticleTitle.Text,
-                        NewsContent = txtNewsArticleContent.Text,
-                        CategoryId = inputedCategory?.CategoryId,
-                        NewsStatus = cbActiveStatus.IsChecked?? true,
-                        CreatedById = createdBy?.AccountId,
-                        CreatedDate = updateArticle?.CreatedDate,
-                        ModifiedDate = DateTime.Now,
-                    };
+                var article = new NewsArticle
+                {
+                    NewsArticleId = txtID.Text,
+                    NewsTitle = txtNewsArticleTitle.Text,
+                    NewsContent = txtNewsArticleContent.Text,
+                    CategoryId = inputedCategory?.CategoryId,
+                    NewsStatus = cbActiveStatus.IsChecked ?? true,
+                    CreatedById = createdBy?.AccountId,
+                    CreatedDate = updateArticle?.CreatedDate,
+                    ModifiedDate = DateTime.Now,
+                };
 
-                    iNewsArticleService.UpdateNewsArticle(article);
-                    MessageBox.Show("Update news article successfully!", "Success",
-                                                           MessageBoxButton.OK,
-                                                           MessageBoxImage.Information);
-                    this.Hide();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                finally
-                {
-                    ResetInput();
-                }
+                iNewsArticleService.UpdateNewsArticle(article);
+                MessageBox.Show("Update news article successfully!", "Success",
+                                                       MessageBoxButton.OK,
+                                                       MessageBoxImage.Information);
+                this.Hide();
+                ResetInput();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -146,34 +140,41 @@ namespace NguyenHuynhAnhTaiWPF
 
         private void LoadData()
         {
-            NewsArticle? articleData = StaticArticleInformation.ArticleInfo;
-            var tagList = iTagService.GetTags();
-            var cateList = iCategoryService.GetCategories();
-
-            lboTag.ItemsSource = tagList.Select(t => new TagItem
+            try
             {
-                TagId = t.TagId,
-                TagName = t.TagName,
-            }).ToList();
+                NewsArticle? articleData = StaticArticleInformation.ArticleInfo;
+                var tagList = iTagService.GetTags();
+                var cateList = iCategoryService.GetCategories();
 
-            cboCategory.ItemsSource = cateList;
-            cboCategory.DisplayMemberPath = "CategoryName";
-            cboCategory.SelectedValuePath = "CategoryId";
-
-            if (articleData is not null && StaticWindowOptions.IsEditMode)
-            {
-                txtID.Text = articleData.NewsArticleId;
-                txtNewsArticleTitle.Text = articleData.NewsTitle;
-                txtNewsArticleContent.Text = articleData.NewsContent;
-                cbActiveStatus.IsChecked = articleData.NewsStatus;
-                cboCategory.SelectedValue = articleData.CategoryId;
-                foreach (var tag in articleData.Tags)
+                lboTag.ItemsSource = tagList.Select(t => new TagItem
                 {
-                    var tagItem = lboTag.Items.OfType<TagItem>().FirstOrDefault(t => t.TagId == tag.TagId);
-                    if (tagItem is not null) tagItem.IsSelected = true;
+                    TagId = t.TagId,
+                    TagName = t.TagName,
+                }).ToList();
+
+                cboCategory.ItemsSource = cateList;
+                cboCategory.DisplayMemberPath = "CategoryName";
+                cboCategory.SelectedValuePath = "CategoryId";
+
+                if (articleData is not null && StaticWindowOptions.IsEditMode)
+                {
+                    txtID.Text = articleData.NewsArticleId;
+                    txtNewsArticleTitle.Text = articleData.NewsTitle;
+                    txtNewsArticleContent.Text = articleData.NewsContent;
+                    cbActiveStatus.IsChecked = articleData.NewsStatus;
+                    cboCategory.SelectedValue = articleData.CategoryId;
+                    foreach (var tag in articleData.Tags)
+                    {
+                        var tagItem = lboTag.Items.OfType<TagItem>().FirstOrDefault(t => t.TagId == tag.TagId);
+                        if (tagItem is not null) tagItem.IsSelected = true;
+                    }
                 }
+                return;
             }
-            return;
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void ResetInput()

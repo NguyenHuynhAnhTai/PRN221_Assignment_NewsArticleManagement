@@ -47,5 +47,20 @@ namespace DataAccessLayer
                 throw new Exception(ex.Message);
             }
         }
+
+        public static void Delete(Category p)
+        {
+            try
+            {
+                using var db = new FunewsManagementDbContext();
+                var p1 = db.Categories.SingleOrDefault(x => x.CategoryId == p.CategoryId);
+                db.Categories.Remove(p1);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -13,6 +13,11 @@ namespace Services.Implementations
             iAccountRepository = accountRepository;
         }
 
+        public List<SystemAccount> GetAccounts()
+        {
+            return iAccountRepository.GetAccounts();
+        }
+
         public SystemAccount? GetAccountByEmailAndPass(string email, string password)
         {
             return iAccountRepository.GetAccountByEmailAndPass(email, password);
@@ -26,6 +31,15 @@ namespace Services.Implementations
         public void UpdateAccount(SystemAccount account)
         {
             iAccountRepository.UpdateAccount(account);
+        }
+        public void DeleteAccount(SystemAccount account) 
+        {
+            iAccountRepository.DeleteAccount(account);
+        }
+
+        public void AddAccount(SystemAccount account)
+        {
+            iAccountRepository.AddAccount(account);
         }
     }
 }

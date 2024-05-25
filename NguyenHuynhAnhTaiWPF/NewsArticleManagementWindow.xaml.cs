@@ -48,65 +48,79 @@ namespace NguyenHuynhAnhTaiWPF
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            var row = (dynamic)dgvNewsArticleList.SelectedItem;
-            if (row is null)
+            try
             {
-                MessageBox.Show("Please select a row to delete!", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            StaticArticleInformation.ArticleInfo = iNewsArticleService.GetNewsArticleById(row.Id);
-
-            if (StaticArticleInformation.ArticleInfo.NewsStatus == false)
-            {
-                MessageBox.Show("This article had been deleted", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this article?", "Delete",
-                                                                                      MessageBoxButton.YesNo,
-                                                                                      MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
-            {
-                var removeArticle = StaticArticleInformation.ArticleInfo;
-                var inputedCategory = cboCategory.SelectedItem as Category;
-                var createdBy = StaticUserInformation.UserInfo;
-                var selectedTags = lboTag.Items.OfType<TagItem>().Where(t => t.IsSelected).Select(t => new Tag
+                var row = (dynamic)dgvNewsArticleList.SelectedItem;
+                if (row is null)
                 {
-                    TagId = t.TagId,
-                    TagName = t.TagName,
-                }).ToList(); 
+                    MessageBox.Show("Please select a row to delete!", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                StaticArticleInformation.ArticleInfo = iNewsArticleService.GetNewsArticleById(row.Id);
 
-                var article = new NewsArticle
+                if (StaticArticleInformation.ArticleInfo.NewsStatus == false)
                 {
-                    NewsArticleId = row.Id,
-                    NewsTitle = row.Title,
-                    NewsContent = row.Content,
-                    CategoryId = removeArticle.CategoryId,
-                    NewsStatus = false,
-                    CreatedById = createdBy?.AccountId,
-                    CreatedDate = removeArticle?.CreatedDate,
-                    ModifiedDate = DateTime.Now,
-                };
+                    MessageBox.Show("This article had been deleted", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
-                iNewsArticleService.UpdateNewsArticle(article);
-                LoadData();
+                MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this article?", "Delete",
+                                                                                          MessageBoxButton.YesNo,
+                                                                                          MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    var removeArticle = StaticArticleInformation.ArticleInfo;
+                    var inputedCategory = cboCategory.SelectedItem as Category;
+                    var createdBy = StaticUserInformation.UserInfo;
+                    var selectedTags = lboTag.Items.OfType<TagItem>().Where(t => t.IsSelected).Select(t => new Tag
+                    {
+                        TagId = t.TagId,
+                        TagName = t.TagName,
+                    }).ToList();
+
+                    var article = new NewsArticle
+                    {
+                        NewsArticleId = row.Id,
+                        NewsTitle = row.Title,
+                        NewsContent = row.Content,
+                        CategoryId = removeArticle.CategoryId,
+                        NewsStatus = false,
+                        CreatedById = createdBy?.AccountId,
+                        CreatedDate = removeArticle?.CreatedDate,
+                        ModifiedDate = DateTime.Now,
+                    };
+
+                    iNewsArticleService.UpdateNewsArticle(article);
+                    LoadData();
+                }
+                else
+                    return;
             }
-            else
-                return;
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            var row = (dynamic)dgvNewsArticleList.SelectedItem;
-            if (row is null)
+            try
             {
-                MessageBox.Show("Please select a row to update!", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                var row = (dynamic)dgvNewsArticleList.SelectedItem;
+                if (row is null)
+                {
+                    MessageBox.Show("Please select a row to update!", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                StaticArticleInformation.ArticleInfo = iNewsArticleService.GetNewsArticleById(row.Id);
+                StaticWindowOptions.IsEditMode = true;
+                StaticWindowOptions.IsCreateMode = false;
+                newArticleWindow.ShowDialog();
             }
-            StaticArticleInformation.ArticleInfo = iNewsArticleService.GetNewsArticleById(row.Id);
-            StaticWindowOptions.IsEditMode = true;
-            StaticWindowOptions.IsCreateMode = false;
-            newArticleWindow.ShowDialog();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
@@ -177,14 +191,11 @@ namespace NguyenHuynhAnhTaiWPF
                     CreatedBy = a.CreatedBy?.AccountName,
                     a.ModifiedDate,
                 }).ToList();
+                ResetInput();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            finally
-            {
-                ResetInput();
             }
         }
 
@@ -197,7 +208,8 @@ namespace NguyenHuynhAnhTaiWPF
             cboCategory.SelectedIndex = 0;
             cboCategory.Text = "";
             lboTag.SelectedIndex = 0;
-            dgvNewsArticleList.SelectedIndex = -1;
+            dgvNewsArticleList.SelectedItem = null;
+            txtSearch.Text = "";
         }
 
         private void dgNewsArticleList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -269,6 +281,36 @@ namespace NguyenHuynhAnhTaiWPF
         private void btnAddTag_Click(object sender, RoutedEventArgs e)
         {
             addTagWindow.ShowDialog();
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var search = txtSearch.Text;
+                var newsArticleList = iNewsArticleService.GetNewsArticles()
+                                                            .Where(a => a.NewsTitle != null
+                                                                        && a.NewsTitle.Contains(search.Trim()));
+                if (StaticUserInformation.UserInfo is null)
+                    newsArticleList = newsArticleList.Where(a => a.NewsStatus == true);
+                dgvNewsArticleList.ItemsSource = newsArticleList.Select(a => new
+                {
+                    Id = a.NewsArticleId,
+                    Title = a.NewsTitle,
+                    Category = a.Category?.CategoryName,
+                    Tag = string.Join(", ", a.Tags.Select(t => t.TagName)),
+                    a.NewsStatus,
+                    Content = a.NewsContent,
+                    a.CreatedDate,
+                    CreatedBy = a.CreatedBy?.AccountName,
+                    a.ModifiedDate,
+                }).ToList();
+                ResetInput();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }

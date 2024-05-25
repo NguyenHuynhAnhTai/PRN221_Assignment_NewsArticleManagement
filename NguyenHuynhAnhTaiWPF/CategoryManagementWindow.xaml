@@ -52,7 +52,7 @@
             <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="3" Margin="29,0,74,0">
                 <Button  x:Name="btnCreate" Content="Create" Width="121"  Background="#FF0099FF" BorderBrush="White" Foreground="Black" Click="btnCreate_Click"/>
                 <Button x:Name="btnUpdate" Content="Update" Width="118" Background="#FF1B7140" Foreground="Black" RenderTransformOrigin="0.37,0.2" Click="btnUpdate_Click"/>
-                <Button x:Name="btnDelete" Content="Delete" Width="118" Background="MediumPurple" Foreground="Black" RenderTransformOrigin="0.37,0.2" Click="btnUpdate_Click"/>
+                <Button x:Name="btnDelete" Content="Delete" Width="118" Background="MediumPurple" Foreground="Black" RenderTransformOrigin="0.37,0.2" Click="btnDelete_Click"/>
                 <Button x:Name="btnClose" Content="Close" Width="120" Background="#FFEF8F18" Foreground="Black" Click="btnClose_Click"/>
             </StackPanel>
 

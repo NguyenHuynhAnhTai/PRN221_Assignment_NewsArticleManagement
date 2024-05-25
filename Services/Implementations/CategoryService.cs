@@ -27,5 +27,10 @@ namespace Services.Implementations
         {
             iCategoryRepository.Update(p);
         }
+
+        public void Delete(Category p)
+        {
+            iCategoryRepository.Delete(p);
+        }
     }
 }

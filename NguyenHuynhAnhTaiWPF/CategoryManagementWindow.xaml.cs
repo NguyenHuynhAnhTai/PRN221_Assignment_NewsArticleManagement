@@ -36,10 +36,17 @@ namespace NguyenHuynhAnhTaiWPF
 
         private void dgCategoryList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var category = dgvCategoryList.SelectedItem as Category;
-            txtID.Text = category?.CategoryId.ToString();
-            txtName.Text = category?.CategoryName;
-            txtDescription.Text = category?.CategoryDesciption;
+            try
+            {
+                var category = dgvCategoryList.SelectedItem as Category;
+                txtID.Text = category?.CategoryId.ToString();
+                txtName.Text = category?.CategoryName;
+                txtDescription.Text = category?.CategoryDesciption;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
@@ -51,16 +58,23 @@ namespace NguyenHuynhAnhTaiWPF
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            var row = (Category)dgvCategoryList.SelectedItem;
-            if (row is null)
+            try
             {
-                MessageBox.Show("Please select a row to update!", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                var row = (Category)dgvCategoryList.SelectedItem;
+                if (row is null)
+                {
+                    MessageBox.Show("Please select a row to update!", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                StaticCategoryInformation.CategoryInfo = row;
+                StaticWindowOptions.IsEditMode = true;
+                StaticWindowOptions.IsCreateMode = false;
+                categoryDetailWindow.ShowDialog();
             }
-            StaticCategoryInformation.CategoryInfo = row;
-            StaticWindowOptions.IsEditMode = true;
-            StaticWindowOptions.IsCreateMode = false;
-            categoryDetailWindow.ShowDialog();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -91,6 +105,33 @@ namespace NguyenHuynhAnhTaiWPF
             txtID.Text = "";
             txtName.Text = "";
             txtDescription.Text = "";
+            dgvCategoryList.SelectedItem = null;
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var row = (Category)dgvCategoryList.SelectedItem;
+                if (row is null)
+                {
+                    MessageBox.Show("Please select a row to delete!", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                MessageBoxResult result = MessageBox.Show("Do you want to delete this category?", "Confirmation",
+                                                                                         MessageBoxButton.OKCancel,
+                                                                                         MessageBoxImage.Warning);
+                if (result == MessageBoxResult.OK)
+                    iCategoryService.Delete(row);
+                else
+                    return;
+                ResetInput();
+                LoadData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }

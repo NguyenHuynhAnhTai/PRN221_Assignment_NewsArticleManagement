@@ -19,21 +19,30 @@ namespace NguyenHuynhAnhTaiWPF
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            int tagId;
             try
             {
-                var tagList= iTagService.GetTags();
+                tagId = int.Parse(txtID.Text.Trim());
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Tag ID must be a number!", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            try
+            {
                 if (txtName.Text.Trim() == "" || txtNote.Text.Trim() == "")
                 {
                     MessageBox.Show("Please fill in all information", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                if (tagList.Exists(x => x.TagName == txtName.Text.Trim()))
+                if (iTagService.GetTagById(tagId) is not null)
                 {
                     MessageBox.Show("Tag name already exists!", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 var addTag = new Tag();
-                addTag.TagId = tagList.Count;
+                addTag.TagId = int.Parse(txtID.Text.Trim());
                 addTag.TagName = txtName.Text;
                 addTag.Note = txtNote.Text;
 
@@ -43,14 +52,11 @@ namespace NguyenHuynhAnhTaiWPF
                                     MessageBoxButton.OK,
                                     MessageBoxImage.Information);
                 this.Hide();
+                ResetInput();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            finally
-            {
-                ResetInput();
             }
         }
 
@@ -67,6 +73,7 @@ namespace NguyenHuynhAnhTaiWPF
 
         public void ResetInput()
         {
+            txtID.Text = "";
             txtName.Text = "";
             txtNote.Text = "";
         }

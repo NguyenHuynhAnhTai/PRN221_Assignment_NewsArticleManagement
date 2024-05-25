@@ -42,7 +42,7 @@ namespace NguyenHuynhAnhTaiWPF
                 SystemAccount updateAccount = new SystemAccount();
 
                 updateAccount.AccountId = short.Parse(txtID.Text);
-                if (txtRole.Text == "staff")
+                if (txtRole.Text.Trim().ToLower() == "staff")
                     updateAccount.AccountRole = 1;
                 updateAccount.AccountName = txtName.Text;
                 updateAccount.AccountEmail = txtEmail.Text;
@@ -53,31 +53,35 @@ namespace NguyenHuynhAnhTaiWPF
                 MessageBox.Show("Update successfully!", "Success",
                                                    MessageBoxButton.OK,
                                                    MessageBoxImage.Information);
+                this.Hide();
+                LoadData();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            finally
-            {
-                LoadData();
-                this.Hide();
             }
         }
 
 
         private void LoadData()
         {
-            userAccount = StaticUserInformation.UserInfo;
-            if (userAccount is not null)
+            try
             {
-                var account = iSystemAccountService.GetAccountById(userAccount.AccountId);
-                txtID.Text = account.AccountId.ToString();
-                if (account.AccountRole == 1)
-                    txtRole.Text = "staff";
-                txtEmail.Text = account.AccountEmail;
-                txtName.Text = account.AccountName;
-                txtPassword.Password = account.AccountPassword;
+                userAccount = StaticUserInformation.UserInfo;
+                if (userAccount is not null)
+                {
+                    var account = iSystemAccountService.GetAccountById(userAccount.AccountId);
+                    txtID.Text = account.AccountId.ToString();
+                    if (account.AccountRole == 1)
+                        txtRole.Text = "staff";
+                    txtEmail.Text = account.AccountEmail;
+                    txtName.Text = account.AccountName;
+                    txtPassword.Password = account.AccountPassword;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

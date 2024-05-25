@@ -1,21 +1,7 @@
 ﻿using BusinessObjects;
 using BusinessObjects.Entities;
-using Services.Implementations;
 using Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static NguyenHuynhAnhTaiWPF.NewsArticleDetailWindow;
 
 namespace NguyenHuynhAnhTaiWPF
 {
@@ -54,14 +40,11 @@ namespace NguyenHuynhAnhTaiWPF
                                                        MessageBoxImage.Information);
 
                 this.Hide();
+                ResetInput();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            finally
-            {
-                ResetInput();
             }
         }
 
@@ -103,14 +86,11 @@ namespace NguyenHuynhAnhTaiWPF
                                                        MessageBoxButton.OK,
                                                        MessageBoxImage.Information);
                 this.Hide();
+                ResetInput();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            finally
-            {
-                ResetInput();
             }
         }
 
@@ -127,10 +107,20 @@ namespace NguyenHuynhAnhTaiWPF
 
         private void LoadData()
         {
-            var category = StaticCategoryInformation.CategoryInfo;
-            txtID.Text = category?.CategoryId.ToString();
-            txtName.Text = category?.CategoryName;
-            txtDescription.Text = category?.CategoryDesciption;
+            try
+            {
+                var category = StaticCategoryInformation.CategoryInfo;
+                if (category is not null && StaticWindowOptions.IsEditMode)
+                {
+                    txtID.Text = category?.CategoryId.ToString();
+                    txtName.Text = category?.CategoryName;
+                    txtDescription.Text = category?.CategoryDesciption;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
         private void ResetInput()
         {

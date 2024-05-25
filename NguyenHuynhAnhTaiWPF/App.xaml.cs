@@ -39,6 +39,7 @@ namespace Exercise
             services.AddSingleton<AddTagWindow>();
             services.AddSingleton<CategoryManagementWindow>();
             services.AddSingleton<CategoryDetailWindow>();
+            services.AddSingleton<AccountDetailWindow>();
 
             serviceProvider = serviceProvider ?? services.BuildServiceProvider(); // tao doi tuong cung cap dich vu
         }
