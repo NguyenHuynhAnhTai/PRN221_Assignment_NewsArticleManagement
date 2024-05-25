@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BusinessObjects.Entities;
+using Microsoft.Extensions.DependencyInjection;
 using NguyenHuynhAnhTaiWPF;
 using Repositories.Implementations;
 using Repositories.Interfaces;
@@ -32,6 +33,12 @@ namespace Exercise
             services.AddSingleton<LoginWindow>();
             services.AddSingleton<MainWindow>();
             services.AddSingleton<NewsArticleManagementWindow>();
+            services.AddSingleton<UpdateAccountWindow>();
+            services.AddSingleton<AdminWindow>();
+            services.AddSingleton<NewsArticleDetailWindow>();
+            services.AddSingleton<AddTagWindow>();
+            services.AddSingleton<CategoryManagementWindow>();
+            services.AddSingleton<CategoryDetailWindow>();
 
             serviceProvider = serviceProvider ?? services.BuildServiceProvider(); // tao doi tuong cung cap dich vu
         }

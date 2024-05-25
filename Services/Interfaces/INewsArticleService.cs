@@ -8,6 +8,6 @@ namespace Services.Interfaces
         void DeleteNewsArticle(NewsArticle p);
         void UpdateNewsArticle(NewsArticle p);
         List<NewsArticle> GetNewsArticles();
-        NewsArticle GetNewsArticleById(int id);
+        NewsArticle? GetNewsArticleById(string id);
     }
 }

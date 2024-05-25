@@ -1,9 +1,9 @@
-﻿using BusinessObjects.Entities;
+﻿using BusinessObjects;
+using BusinessObjects.Entities;
 using Microsoft.Extensions.Configuration;
 using Services.Interfaces;
 using System.IO;
 using System.Windows;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace NguyenHuynhAnhTaiWPF
 {
@@ -12,15 +12,24 @@ namespace NguyenHuynhAnhTaiWPF
     /// </summary>
     public partial class LoginWindow : Window
     {
-        protected readonly ISystemAccountService iSystemAccountService;
+        private readonly ISystemAccountService iSystemAccountService;
+        private readonly MainWindow mainWindow;
+        private readonly AdminWindow adminWindow;
+        private readonly NewsArticleManagementWindow newsArticleManagementWindow;
 
-        public LoginWindow(ISystemAccountService systemAccountService)
+        public LoginWindow(ISystemAccountService systemAccountService, 
+                            MainWindow mainWindow,
+                            AdminWindow adminWindow,
+                            NewsArticleManagementWindow newsArticleManagementWindow)
         {
             InitializeComponent();
             iSystemAccountService = systemAccountService;
+            this.mainWindow = mainWindow;
+            this.adminWindow = adminWindow;
+            this.newsArticleManagementWindow = newsArticleManagementWindow;
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Do you want to close this window?", "Confirmation",
                                                        MessageBoxButton.OKCancel,
@@ -33,31 +42,34 @@ namespace NguyenHuynhAnhTaiWPF
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            var adminInfo = GetAdminInfo();
-            SystemAccount? systemAccount = iSystemAccountService.GetAccountByEmailAndPass(txtEmail.Text, txtPassword.Password);
-            if (adminInfo.adminEmail.Equals(txtEmail.Text) && adminInfo.adminPassword.Equals(txtPassword.Password))
+            try
             {
-                this.Hide();
-                new AdminWindow().Show();
-                return;
-            }
-            if (systemAccount is not null)
-            {
-                if (systemAccount.AccountRole == 1)
+                var adminInfo = GetAdminInfo();
+                SystemAccount? systemAccount = iSystemAccountService.GetAccountByEmailAndPass(txtEmail.Text, txtPassword.Password);
+                if (adminInfo.adminEmail.Equals(txtEmail.Text) && adminInfo.adminPassword.Equals(txtPassword.Password))
                 {
-                    var mainWindow = new MainWindow(systemAccount, iSystemAccountService);
                     this.Hide();
-                    mainWindow.Show();
+                    adminWindow.Show();
                     return;
                 }
-                MessageBox.Show("You do not have permission!", "Warning",
-                                                   MessageBoxButton.OK,
-                                                   MessageBoxImage.Warning);
-                return;
+                if (systemAccount is not null)
+                {
+                    if (systemAccount.AccountRole == 1)
+                    {
+                        this.Hide();
+                        StaticUserInformation.UserInfo = systemAccount;
+                        mainWindow.Show();
+                        return;
+                    }
+                }
+                MessageBox.Show("Email or password is incorrect", "Warning",
+                                 MessageBoxButton.OK,
+                                 MessageBoxImage.Error);
             }
-            MessageBox.Show("Email or password is incorrect", "Warning",
-                             MessageBoxButton.OK,
-                             MessageBoxImage.Error);
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private (string adminEmail, string adminPassword) GetAdminInfo()
@@ -70,14 +82,10 @@ namespace NguyenHuynhAnhTaiWPF
             return (adminEmail, adminPassword);
         }
 
-        private bool CheckLogin(string email, string password)
+        private void btnNewsView_Click(object sender, RoutedEventArgs e)
         {
-            SystemAccount? systemAccount = iSystemAccountService.GetAccountByEmailAndPass(email, password);
-            if (systemAccount != null)
-            {
-                return true;
-            }
-            return false;
+            this.Hide();
+            newsArticleManagementWindow.Show();
         }
     }
 }

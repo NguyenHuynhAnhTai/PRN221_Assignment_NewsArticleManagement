@@ -18,7 +18,7 @@ namespace Services.Implementations
             iNewsArticleRepository.DeleteNewsArticle(p);
         }
 
-        public NewsArticle GetNewsArticleById(int id)
+        public NewsArticle? GetNewsArticleById(string id)
         {
             return iNewsArticleRepository.GetNewsArticleById(id);
         }

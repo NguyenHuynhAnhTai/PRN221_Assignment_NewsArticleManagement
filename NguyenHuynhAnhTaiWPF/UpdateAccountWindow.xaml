@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:NguyenHuynhAnhTaiWPF"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="UpdateAccountWindow" Height="380" Width="820">
-    <Grid Background="CornflowerBlue" Height="376" Width="800">
+        Title="UpdateAccountWindow" Height="380" Width="820" Activated="Window_Activated"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip">
+    <Grid Height="376" Width="800">
         <Grid.RowDefinitions>
             <RowDefinition Height="83"/>
             <RowDefinition Height="39"/>
@@ -29,11 +31,11 @@
         <Label x:Name="lbEmail" Content="Email" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Top" Width="112" FontSize="20" Height="35" Margin="0,38,0,0" Grid.RowSpan="2"/>
         <Label x:Name="lbPassword" Content="Password" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Top" Width="112" FontSize="20" Height="35"/>
 
-        <TextBox x:Name="txtID" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="589" Height="39" FontSize="22" IsEnabled="False" Grid.Row="1"/>
-        <TextBox x:Name="txtRole" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="589" Height="39" FontSize="22" IsEnabled="False"/>
-        <TextBox x:Name="txtName" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="589" Height="39" FontSize="22"/>
-        <TextBox x:Name="txtEmail" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" Width="589" FontSize="22" Height="36" VerticalAlignment="Bottom" Margin="0,0,0,3"/>
-        <PasswordBox x:Name="txtPassword" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top" FontSize="22" Height="45" HorizontalAlignment="Center" Width="589" Margin="0,36,0,0" Grid.RowSpan="3"/>
+        <TextBox x:Name="txtID" BorderBrush="Black" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="589" Height="39" FontSize="22" IsEnabled="False" Grid.Row="1"/>
+        <TextBox x:Name="txtRole" BorderBrush="Black" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="589" Height="39" FontSize="22" IsEnabled="False"/>
+        <TextBox x:Name="txtName" BorderBrush="Black" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="589" Height="39" FontSize="22"/>
+        <TextBox x:Name="txtEmail" BorderBrush="Black" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" Width="589" FontSize="22" Height="36" VerticalAlignment="Bottom" Margin="0,0,0,3"/>
+        <PasswordBox x:Name="txtPassword" BorderBrush="Black" BorderThickness="2" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top" FontSize="22" Height="45" HorizontalAlignment="Center" Width="589" Margin="0,36,0,0" Grid.RowSpan="3"/>
         <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal" Margin="421,0,4,32" Height="40" VerticalAlignment="Bottom" RenderTransformOrigin="0.532,1.193">
             <Button x:Name="btnUpdate"  Content="Update" FontSize="20" Width="81" Click="btnUpdate_Click" RenderTransformOrigin="0.519,1.414"/>
             <Button x:Name="btnClose"  Content="Close" FontSize="20" Width="83" Click="btnClose_Click"/>

@@ -1,4 +1,5 @@
-﻿using BusinessObjects.Entities;
+﻿using BusinessObjects;
+using BusinessObjects.Entities;
 using Services.Interfaces;
 using System.Windows;
 
@@ -9,33 +10,75 @@ namespace NguyenHuynhAnhTaiWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly SystemAccount userAccount;
+        private SystemAccount? userAccount;
 
         private readonly ISystemAccountService iSystemAccountService;
+        private readonly UpdateAccountWindow updateAccountWindow;
+        private readonly NewsArticleManagementWindow newsArticleManagementWindow;
+        private readonly CategoryManagementWindow categoryManagementWindow;
 
-        public MainWindow(SystemAccount systemAccount, ISystemAccountService systemAccountService)
+        public MainWindow(ISystemAccountService systemAccountService,
+                            UpdateAccountWindow updateAccountWindow,
+                            NewsArticleManagementWindow newsArticleManagementWindow,
+                            CategoryManagementWindow categoryManagementWindow)
         {
             InitializeComponent();
-            userAccount = systemAccount;
             iSystemAccountService = systemAccountService;
-
-            LoadData();
+            this.updateAccountWindow = updateAccountWindow;
+            this.newsArticleManagementWindow = newsArticleManagementWindow;
+            this.categoryManagementWindow = categoryManagementWindow;
         }
 
         private void LoadData()
-        {   
-            var account = iSystemAccountService.GetAccountById(userAccount.AccountId);
-            txtID.Text = account.AccountId.ToString();
-            if (account.AccountRole == 1)
-                txtRole.Text = "staff";
-            txtEmail.Text = account.AccountEmail;
-            txtName.Text = account.AccountName;
-            txtPassword.Password = account.AccountPassword;
+        {
+            userAccount = StaticUserInformation.UserInfo;
+            if (userAccount is not null)
+            {
+                var account = iSystemAccountService.GetAccountById(userAccount.AccountId);
+                txtID.Text = account.AccountId.ToString();
+                if (account.AccountRole == 1)
+                    txtRole.Text = "staff";
+                txtEmail.Text = account.AccountEmail;
+                txtName.Text = account.AccountName;
+                txtPassword.Password = account.AccountPassword;
+            }
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            new UpdateAccountWindow(userAccount, iSystemAccountService).Show();
+            updateAccountWindow.ShowDialog();
+        }
+
+        private void btnNewsArticleManagement_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            newsArticleManagementWindow.ShowDialog();
+            if (newsArticleManagementWindow.IsActive == false)
+                this.Show();
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to close this window?", "Confirmation",
+                                                                      MessageBoxButton.OKCancel,
+                                                                      MessageBoxImage.Warning);
+            if (result == MessageBoxResult.OK)
+                this.Close();
+            else
+                return;
+        }
+
+        private void btnCategoryManagement_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            categoryManagementWindow.ShowDialog();
+            if (categoryManagementWindow.IsActive == false)
+                this.Show();
         }
     }
 }

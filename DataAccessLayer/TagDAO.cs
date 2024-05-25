@@ -18,5 +18,33 @@ namespace DataAccessLayer
             }
             return listTags;
         }
+
+        public static Tag? GetTagById(int tagId)
+        {
+            try
+            {
+                using var context = new FunewsManagementDbContext();
+                Tag? tag = context.Tags.Find(tagId);
+                return tag;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static void Add(Tag p)
+        {
+            try
+            {
+                using var db = new FunewsManagementDbContext();
+                db.Tags.Add(p);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

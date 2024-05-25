@@ -11,13 +11,28 @@ namespace DataAccessLayer
             try
             {
                 using var db = new FunewsManagementDbContext();
-                listNewsArticles = db.NewsArticles.ToList();
+                listNewsArticles = db.NewsArticles
+                                        .Include(a => a.Tags)
+                                        .Include(a => a.Category)
+                                        .Include(a => a.CreatedBy)
+                                        .ToList();
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
             return listNewsArticles;
+        }
+
+        public static NewsArticle? GetNewsArticleById(string id)
+        {
+            using var db = new FunewsManagementDbContext();
+            NewsArticle? article = db.NewsArticles
+                                     .Include(a => a.Tags)
+                                     .Include(a => a.Category)
+                                     .Include(a => a.CreatedBy)
+                                     .FirstOrDefault(x => x.NewsArticleId.Equals(id));
+            return article;
         }
 
         public static void SaveNewsArticle(NewsArticle p)
@@ -61,12 +76,6 @@ namespace DataAccessLayer
             {
                 throw new Exception(ex.Message);
             }
-        }
-
-        public static NewsArticle GetNewsArticleById(int id)
-        {
-            using var db = new FunewsManagementDbContext();
-            return db.NewsArticles.FirstOrDefault(x => x.NewsArticleId.Equals(id));
         }
     }
 }

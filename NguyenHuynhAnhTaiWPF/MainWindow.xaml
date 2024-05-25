@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:NguyenHuynhAnhTaiWPF"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="496" Width="742">
-    <Grid Background="CornflowerBlue" Width="732" Height="486">
+        Title="MainWindow" Height="549" Width="770" Activated="Window_Activated"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip">
+    <Grid Width="732" Height="500" Margin="5,0,5,-32">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition Height="Auto"/>
@@ -29,31 +31,31 @@
 
         <!-- Id -->
         <Label x:Name="lbID" Grid.Row="1" Grid.Column="1" Content="Id" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="30" Height="50" Grid.ColumnSpan="2"/>
-        <TextBox Grid.Row="1" Grid.Column="2" x:Name="txtID" IsReadOnly="True" Margin="19,5,5,5" Grid.ColumnSpan="2" IsEnabled="False" FontSize="30"/>
+        <TextBox Grid.Row="1" Grid.Column="2" x:Name="txtID" IsReadOnly="True" Margin="19,5,5,5" Grid.ColumnSpan="2" IsEnabled="False" FontSize="30" BorderThickness="2" BorderBrush="Black"/>
 
         <!-- Role -->
         <Label x:Name="lbRole" Grid.Row="2" Grid.Column="1" Content="Role" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="30" Height="50" Grid.ColumnSpan="2"/>
-        <TextBox Grid.Row="2" Grid.Column="2" x:Name="txtRole" Margin="20,4,5,4" Grid.ColumnSpan="2" FontSize="30" IsEnabled="False"/>
+        <TextBox Grid.Row="2" Grid.Column="2" x:Name="txtRole" Margin="20,4,5,4" Grid.ColumnSpan="2" FontSize="30" IsEnabled="False" BorderBrush="Black" BorderThickness="2"/>
 
 
         <!-- Name -->
         <Label x:Name="lbName" Grid.Row="3" Grid.Column="1" Content="Name" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="30" Height="50" Grid.ColumnSpan="2"/>
-        <TextBox Grid.Row="3" Grid.Column="2" x:Name="txtName" Margin="20,4,5,4" Grid.ColumnSpan="2" FontSize="30" IsEnabled="False"/>
+        <TextBox Grid.Row="3" Grid.Column="2" x:Name="txtName" Margin="20,4,5,4" Grid.ColumnSpan="2" FontSize="30" IsEnabled="False" BorderBrush="Black" BorderThickness="2"/>
 
         <!-- Email -->
         <Label x:Name="lbEmail" Grid.Row="4" Grid.Column="1" Content="Email" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="30" Height="50" Grid.ColumnSpan="2"/>
-        <TextBox Grid.Row="4" Grid.Column="2" x:Name="txtEmail" Margin="20,4,5,4" Grid.ColumnSpan="2" FontSize="30" IsEnabled="False"/>
+        <TextBox Grid.Row="4" Grid.Column="2" x:Name="txtEmail" Margin="20,4,5,4" Grid.ColumnSpan="2" FontSize="30" IsEnabled="False" BorderBrush="Black" BorderThickness="2"/>
 
         <!-- Password -->
         <Label x:Name="lbPassword" Grid.Row="5" Grid.Column="1" Content="Password" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="30" Height="50" Grid.ColumnSpan="2"/>
-        <PasswordBox Grid.Row="5" Grid.Column="2" x:Name="txtPassword" Margin="20,4,5,4" Grid.ColumnSpan="2" FontSize="30" IsEnabled="False"/>
+        <PasswordBox Grid.Row="5" Grid.Column="2" x:Name="txtPassword" Margin="20,4,5,4" Grid.ColumnSpan="2" FontSize="30" IsEnabled="False" BorderBrush="Black" BorderThickness="2"/>
 
         <!-- Buttons -->
-        <StackPanel Grid.Row="6" Grid.Column="3" Orientation="Horizontal" Margin="0,10,0,10" HorizontalAlignment="Left" Width="553">
-            <Button x:Name="btnAccountManagement" Content="Account Management" Margin="5" FontSize="13" Width="135"/>
-            <Button x:Name="btnNewsArticleManagement" Content="News Article Management" Margin="5" FontSize="13" Width="158"/>
-            <Button x:Name="btnCategoryManagement" Content="Category Management" Margin="5" FontSize="13" Width="140"/>
-            <Button x:Name="btnUpdate" Content="Update" Margin="5" FontSize="13" Width="89" Click="btnUpdate_Click"/>
+        <StackPanel Grid.Row="6" Grid.Column="3" Orientation="Horizontal" Margin="0,10,0,10" HorizontalAlignment="Left" Width="565">
+            <Button x:Name="btnNewsArticleManagement" Content="News Article Management" Margin="5" FontSize="13" Width="158" Click="btnNewsArticleManagement_Click"/>
+            <Button x:Name="btnCategoryManagement" Content="Category Management" Margin="5" FontSize="13" Width="140" Click="btnCategoryManagement_Click"/>
+            <Button x:Name="btnUpdate" Content="Update" Margin="5" FontSize="13" Width="90" Click="btnUpdate_Click"/>
+            <Button x:Name="btnClose" Content="Close" Margin="5" FontSize="13" Width="94" Click="btnClose_Click"/>
         </StackPanel>
     </Grid>
 </Window>

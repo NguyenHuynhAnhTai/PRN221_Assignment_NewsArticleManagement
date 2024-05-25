@@ -10,6 +10,6 @@ namespace Repositories.Implementations
         public void SaveNewsArticle(NewsArticle p) => NewsArticleDAO.SaveNewsArticle(p);
         public void UpdateNewsArticle(NewsArticle p) => NewsArticleDAO.UpdateNewsArticle(p);
         public List<NewsArticle> GetNewsArticles() => NewsArticleDAO.GetNewsArticles();
-        public NewsArticle GetNewsArticleById(int id) => NewsArticleDAO.GetNewsArticleById(id);
+        public NewsArticle? GetNewsArticleById(string id) => NewsArticleDAO.GetNewsArticleById(id);
     }
 }

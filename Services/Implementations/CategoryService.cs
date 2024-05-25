@@ -17,5 +17,15 @@ namespace Services.Implementations
         {
             return iCategoryRepository.GetCategories(); 
         }
+
+        public void Add(Category p)
+        {
+            iCategoryRepository.Add(p);
+        }
+
+        public void Update(Category p)
+        {
+            iCategoryRepository.Update(p);
+        }
     }
 }

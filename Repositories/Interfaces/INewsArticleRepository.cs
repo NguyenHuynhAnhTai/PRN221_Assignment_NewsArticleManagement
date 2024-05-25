@@ -8,6 +8,6 @@ namespace Repositories.Interfaces
         void UpdateNewsArticle(NewsArticle p);
         void DeleteNewsArticle(NewsArticle p);
         List<NewsArticle> GetNewsArticles();
-        NewsArticle GetNewsArticleById(int id);
+        NewsArticle? GetNewsArticleById(string id);
     }
 }

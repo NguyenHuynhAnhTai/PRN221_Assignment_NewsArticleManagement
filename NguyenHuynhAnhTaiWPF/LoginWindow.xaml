@@ -6,25 +6,19 @@
         xmlns:local="clr-namespace:NguyenHuynhAnhTaiWPF"
         mc:Ignorable="d"
         Title="LoginWindow" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen">
-    <Grid>
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip">
+    <Grid Height="410" Width="770">
         <Border CornerRadius="10"                    
         BorderThickness="2"
         Opacity="0.95">
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                    <GradientStop Color="CornflowerBlue" Offset="1"/>
-                    <GradientStop Color="Purple"  Offset="0"/>
-                </LinearGradientBrush>
-            </Border.Background>
-
-
             <Grid>
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             Height="82" VerticalAlignment="Top" Width="632">
                     <TextBlock Text="LOGIN WINDOW"
-                                Foreground="White"
+                                Foreground="Black"
                                 FontSize="28"
                                 FontWeight="Medium"
                                 FontFamily="Montserrat"
@@ -34,9 +28,9 @@
                 </StackPanel>
                 <StackPanel
                         Orientation="Vertical"
-                        Margin="82,102,82,68">
+                        Margin="82,102,82,95">
                     <TextBlock Text="Email"
-                           Foreground="White"
+                           Foreground="Black"
                            FontSize="12"
                            FontWeight="Medium"
                            FontFamily="Montserrat"                             
@@ -45,9 +39,9 @@
                          FontSize="13"
                          FontWeight="Medium"
                          FontFamily="Montserrat"                            
-                         Foreground="White"
+                         Foreground="Black"
                          CaretBrush="LightGray"
-                         BorderBrush="White"
+                         BorderBrush="Black"
                          BorderThickness="0,0,0,2"
                          Height="28"
                          VerticalContentAlignment="Center"
@@ -60,7 +54,7 @@
 
 
                     <TextBlock Text="Password"
-                           Foreground="White"
+                           Foreground="Black"
                            FontSize="12"
                            FontWeight="Medium"
                            FontFamily="Montserrat"                             
@@ -69,9 +63,9 @@
                          FontSize="13"
                          FontWeight="Medium"
                          FontFamily="Montserrat"                            
-                         Foreground="White"
+                         Foreground="Black"
                          CaretBrush="LightGray"
-                         BorderBrush="White"
+                         BorderBrush="Black"
                          BorderThickness="0,0,0,2"
                          Height="28"
                          VerticalContentAlignment="Center"
@@ -83,18 +77,18 @@
                     <Button x:Name="btnLogin"                          
                         BorderThickness="0"
                         Content="LOG IN"
-                        Foreground="White"
+                        Foreground="Black"
                         FontSize="12"
                         FontFamily="Montserrat"
                         Cursor="Hand"                           
-                        Margin="0,50,0,0"
-                        Click="btnLogin_Click">
+                        Margin="0,10,0,0"
+                        Click="btnLogin_Click" Height="56">
                         <Button.Style>
                             <Style TargetType="Button">
-                                <Setter Property="Background" Value="#0099FF"/>
+                                <Setter Property="Background" Value="Aqua"/>
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#28AEED"/>
+                                        <Setter Property="Background" Value="CornflowerBlue"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -112,21 +106,21 @@
                     </Button>
                 </StackPanel>
                 <StackPanel>
-                    <Button x:Name="btnCancel"                          
+                    <Button x:Name="btnClose"                          
                             BorderThickness="0"
-                            Content="CANCEL"
-                            Foreground="White"
+                            Content="CLOSE"
+                            Foreground="Black"
                             FontSize="12"
                             FontFamily="Montserrat"
                             Cursor="Hand"                           
-                            Margin="20,350,20,0"
-                            Click="btnCancel_Click">
+                            Margin="20,310,20,0"
+                            Click="btnClose_Click">
                         <Button.Style>
                             <Style TargetType="Button">
-                                <Setter Property="Background" Value="LightSeaGreen"/>
+                                <Setter Property="Background" Value="Aqua"/>
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="SeaGreen"/>
+                                        <Setter Property="Background" Value="CornflowerBlue"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -138,6 +132,35 @@
                                         Background="{TemplateBinding Background}">
                                     <ContentPresenter VerticalAlignment="Center"
                                                         HorizontalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button x:Name="btnNewsView"                          
+                        BorderThickness="0"
+                        Content="NEWS VIEW"
+                        Foreground="Black"
+                        FontSize="12"
+                        FontFamily="Montserrat"
+                        Cursor="Hand"
+                        Click="btnNewsView_Click" Height="56">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="Aqua"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="CornflowerBlue"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Width="150" Height="40"
+                                    CornerRadius="20"
+                                    Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
                                 </Border>
                             </ControlTemplate>
                         </Button.Template>

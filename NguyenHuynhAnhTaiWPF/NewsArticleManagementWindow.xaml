@@ -5,28 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NguyenHuynhAnhTaiWPF"
         mc:Ignorable="d"
-        Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
-        Title="Product Management" Height="670" Width="710">
-    <Grid>
+        Title="Product Management" Height="670" Width="730" Activated="Window_Activated"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip">
+    <Grid HorizontalAlignment="Center" Width="700">
         <Grid>
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="CornflowerBlue" Offset="0"/>
-                    <GradientStop Color="#FF347BDA" Offset="0.794"/>
-                    <GradientStop Color="#FF60B1E7" Offset="1"/>
-                    <GradientStop Color="#FF596FDD" Offset="0.309"/>
-                    <GradientStop Color="MediumBlue" Offset="0.484"/>
-                </LinearGradientBrush>
-            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="154"/>
+                <RowDefinition Height="71"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="36"/>
+                <RowDefinition Height="96"/>
                 <RowDefinition/>
                 <RowDefinition Height="63.04"/>
             </Grid.RowDefinitions>
@@ -40,50 +32,48 @@
             </Grid.ColumnDefinitions>
 
 
-            <Label x:Name="lbNewsArticleManagement" Content="NewsArticleManagement" Grid.Column="3" Grid.Row="0" FontSize="36" HorizontalAlignment="Left" Width="466"/>
+            <Label x:Name="lbNewsArticleManagement" Content="News Article Management" Grid.Column="2" Grid.Row="0" FontSize="36" HorizontalAlignment="Left" Width="513" Grid.ColumnSpan="2"/>
 
 
             <Label x:Name="lbID" Margin ="2,2,2,2"  Content="ID" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="txtID" Margin ="4,4,4,4" Grid.Column="2" Grid.Row="1" Text="" TextWrapping="Wrap" Grid.ColumnSpan="2" IsEnabled="False" />
+            <TextBox x:Name="txtID" Margin ="0,4,0,4" Grid.Column="2" Grid.Row="1" Text="" TextWrapping="Wrap" Grid.ColumnSpan="2" IsEnabled="False" />
 
 
             <Label x:Name="lbNewsArticleTitle" Margin ="2,2,2,2" Grid.Column="0" Grid.Row="2" Content="News Article Title" Grid.ColumnSpan="2" />
-            <TextBox x:Name="txtNewsArticleTitle" Margin ="4,4,4,4" Grid.Column="2" Grid.Row="2" Text="" TextWrapping="Wrap" Grid.ColumnSpan="2" />
+            <TextBox x:Name="txtNewsArticleTitle" Margin ="0,4,0,4" Grid.Column="2" Grid.Row="2" Text="" TextWrapping="Wrap" Grid.ColumnSpan="2" IsEnabled="False"/>
 
 
             <Label x:Name="lbTag" Margin ="2,2,2,2" Content="Tag" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
-            <ComboBox x:Name="cboTag" Margin ="3,4,5,4" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" />
+            <ListBox x:Name="lboTag" Margin ="30,4,0,4" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" SelectionMode="Multiple">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Label x:Name="lbTagItem" Content="{Binding TagName}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
 
 
             <Label x:Name="lbStatus" Margin ="2,2,2,2" Content="Status" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
-            <CheckBox x:Name="cbActiveStatus" Grid.Column="2" Content="Active" HorizontalAlignment="Left" Margin="3,0,0,0" Grid.Row="4" VerticalAlignment="Center" Grid.ColumnSpan="2" Height="16" Width="52"/>
-            <CheckBox x:Name="cbInactiveStatus" Grid.Column="3" Content="Inactive" HorizontalAlignment="Left" Margin="13,0,0,0" Grid.Row="4" VerticalAlignment="Center" Height="16" Width="61"/>
+            <CheckBox x:Name="cbActiveStatus" Grid.Column="1" Content="Active" HorizontalAlignment="Left" Margin="30,0,0,0" Grid.Row="4" VerticalAlignment="Center" Grid.ColumnSpan="3" Height="16" Width="52" IsEnabled="False"/>
 
 
             <Label x:Name="lbCategory" Margin ="2,2,2,2" Content="Category" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"/>
-            <ComboBox x:Name="cboCategory" Margin ="4,4,4,4" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="2" />
+            <ComboBox x:Name="cboCategory" Margin ="29,0,0,4" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" IsEnabled="False"/>
 
-            <Label x:Name="lbContent" Margin ="2,2,2,126" Content="Content" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2"/>
-
-
-
-            <DataGrid x:Name="dgData" Margin ="4,0,0,3" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" SelectionChanged="dgData_SelectionChanged" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="552" >
-                <DataGrid.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleX="-0.198"/>
-                        <RotateTransform/>
-                        <TranslateTransform X="0.592"/>
-                    </TransformGroup>
-                </DataGrid.RenderTransform>
-            </DataGrid>
-            <Button  x:Name="btnCreate" Content="Create" HorizontalAlignment="Left" Margin="13,0,0,17" Grid.Row="8" Width="121"  Background="#FF0099FF" BorderBrush="White" Foreground="White" Grid.ColumnSpan="2" Grid.Column="2" Click="btnCreate_Click"/>
-            <Button x:Name="btnUpdate" Content="Update" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,292,17" Grid.Row="8" Width="118" Background="#FF1B7140" Foreground="White" RenderTransformOrigin="0.37,0.2" Click="btnUpdate_Click"/>
-            <Button x:Name="btnDelete" Content="Delete" Grid.Column="3" HorizontalAlignment="Left" Margin="232,0,0,17" Grid.Row="8" Width="127" Foreground="White" Background="#FFA2AA3D" Click="btnDelete_Click"/>
+            <Label x:Name="lbContent" Content="Content" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Margin="0,0,2,0"/>
+            <TextBox x:Name="txtNewsArticleContent" Margin ="29,0,0,0" Grid.Column="1" Grid.Row="6" Text="" TextWrapping="Wrap" Grid.ColumnSpan="3" IsEnabled="False"/>
 
 
-            <Button x:Name="btnClose" Content="Close" Grid.Column="3" HorizontalAlignment="Left" Margin="371,1,0,16" Grid.Row="8" Width="120" Background="#FFEF8F18" Foreground="White" Click="btnClose_Click"/>
-            <TextBox x:Name="txtNewsArticleTitle_Copy" Margin ="4,3,5,10" Grid.Column="2" Grid.Row="6" Text="" TextWrapping="Wrap" Grid.ColumnSpan="2" />
+
+            <DataGrid x:Name="dgvNewsArticleList" Margin ="29,0,0,0" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="3" MouseDoubleClick="dgNewsArticleList_MouseDoubleClick" IsReadOnly="True"/>
+            <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="3" Margin="29,0,0,0">
+                <Button  x:Name="btnCreate" Content="Create" Width="84"  Background="#FF0099FF" BorderBrush="White" Foreground="Black" Click="btnCreate_Click"/>
+                <Button x:Name="btnUpdate" Content="Update" Width="82" Background="#FF1B7140" Foreground="Black" Click="btnUpdate_Click"/>
+                <Button x:Name="btnDelete" Content="Delete" Width="73" Foreground="Black" Background="#FFA2AA3D" Click="btnDelete_Click"/>
+                <Button x:Name="btnAddTag" Content="Add Tag" Width="83" Background="MediumPurple" Foreground="Black" Click="btnAddTag_Click"/>
+                <Button x:Name="btnClose" Content="Close" Width="83" Background="#FFEF8F18" Foreground="Black" Click="btnClose_Click"/>
+            </StackPanel>
 
 
         </Grid>

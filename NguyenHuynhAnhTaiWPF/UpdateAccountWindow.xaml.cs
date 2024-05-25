@@ -1,19 +1,8 @@
-﻿using BusinessObjects.Entities;
-using Services.Implementations;
+﻿using BusinessObjects;
+using BusinessObjects.Entities;
 using Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace NguyenHuynhAnhTaiWPF
 {
@@ -22,21 +11,34 @@ namespace NguyenHuynhAnhTaiWPF
     /// </summary>
     public partial class UpdateAccountWindow : Window
     {
-        private readonly SystemAccount userAccount;
+        private SystemAccount? userAccount;
         private readonly ISystemAccountService iSystemAccountService;
 
-        public UpdateAccountWindow(SystemAccount userAccount, ISystemAccountService systemAccountService)
+        public UpdateAccountWindow(ISystemAccountService systemAccountService)
         {
             InitializeComponent();
-            this.userAccount = userAccount;
             iSystemAccountService = systemAccountService;
-            LoadData();
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                string pattern = @"^[A-Za-z][\w\-\.]*@FUNewsManagement\.org$";
+                Regex regex = new Regex(pattern);
+                if (txtID.Text.Trim() == "" || txtName.Text.Trim() == "" || txtEmail.Text.Trim() == "" || txtPassword.Password.Trim() == "")
+                {
+                    MessageBox.Show("Please fill in all information", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (!regex.IsMatch(txtEmail.Text))
+                {
+                    MessageBox.Show("Email is invalid!\n" +
+                                    "Format email: Word + .... + @FUNewsManagement.org", "Warn",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Warning);
+                    return;
+                }
                 SystemAccount updateAccount = new SystemAccount();
 
                 updateAccount.AccountId = short.Parse(txtID.Text);
@@ -54,24 +56,29 @@ namespace NguyenHuynhAnhTaiWPF
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                MessageBox.Show(ex.Message, "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             finally
             {
                 LoadData();
+                this.Hide();
             }
         }
 
 
         private void LoadData()
         {
-            var account = iSystemAccountService.GetAccountById(userAccount.AccountId);
-            txtID.Text = account.AccountId.ToString();
-            if (account.AccountRole == 1)
-                txtRole.Text = "staff";
-            txtEmail.Text = account.AccountEmail;
-            txtName.Text = account.AccountName;
-            txtPassword.Password = account.AccountPassword;
+            userAccount = StaticUserInformation.UserInfo;
+            if (userAccount is not null)
+            {
+                var account = iSystemAccountService.GetAccountById(userAccount.AccountId);
+                txtID.Text = account.AccountId.ToString();
+                if (account.AccountRole == 1)
+                    txtRole.Text = "staff";
+                txtEmail.Text = account.AccountEmail;
+                txtName.Text = account.AccountName;
+                txtPassword.Password = account.AccountPassword;
+            }
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -81,9 +88,14 @@ namespace NguyenHuynhAnhTaiWPF
                                                                       MessageBoxImage.Warning);
             if (result == MessageBoxResult.OK)
             {
-                this.Close();
+                this.Hide();
             }
             else return;
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            LoadData();
         }
     }
 }
