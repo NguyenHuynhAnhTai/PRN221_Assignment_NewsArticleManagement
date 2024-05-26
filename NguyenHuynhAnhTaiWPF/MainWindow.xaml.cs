@@ -86,6 +86,7 @@ namespace NguyenHuynhAnhTaiWPF
 
         private void btnHistory_Click(object sender, RoutedEventArgs e)
         {
+            StaticUserInformation.UserInfo = userAccount;
             this.Hide();
             historyWindow.ShowDialog();
             if (historyWindow.IsActive == false)

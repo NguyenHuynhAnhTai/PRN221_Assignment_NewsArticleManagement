@@ -1,4 +1,5 @@
-﻿using BusinessObjects.Entities;
+﻿using BusinessObjects;
+using BusinessObjects.Entities;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -49,18 +50,21 @@ namespace NguyenHuynhAnhTaiWPF
         {
             try
             {
-                var newsArticlesHistory = iNewsArticleService.GetNewsArticles().Select(a => new
-                {
-                    Id = a.NewsArticleId,
-                    Title = a.NewsTitle,
-                    Category = a.Category?.CategoryName,
-                    Tag = string.Join(", ", a.Tags.Select(t => t.TagName)),
-                    a.NewsStatus,
-                    Content = a.NewsContent,
-                    a.CreatedDate,
-                    CreatedBy = a.CreatedBy?.AccountName,
-                    a.ModifiedDate,
-                }).ToList();
+                var newsArticlesHistory = iNewsArticleService.GetNewsArticles()
+                                                                .Where(a => a.CreatedById == StaticUserInformation.UserInfo?.AccountId)
+                                                                .Select(a => new
+                                                                {
+                                                                    Id = a.NewsArticleId,
+                                                                    Title = a.NewsTitle,
+                                                                    Category = a.Category?.CategoryName,
+                                                                    Tag = string.Join(", ", a.Tags.Select(t => t.TagName)),
+                                                                    a.NewsStatus,
+                                                                    Content = a.NewsContent,
+                                                                    a.CreatedDate,
+                                                                    CreatedBy = a.CreatedBy?.AccountName,
+                                                                    a.ModifiedDate,
+                                                                })
+                                                                .OrderByDescending(a => a.CreatedDate).ToList();
 
                 dgvNewsHistory.ItemsSource = newsArticlesHistory;
             }
