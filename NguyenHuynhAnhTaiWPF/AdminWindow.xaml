@@ -59,6 +59,7 @@
                 <Button  x:Name="btnCreate" Content="Create" Width="106"  Background="#FF0099FF" BorderBrush="White" Foreground="Black" Click="btnCreate_Click"/>
                 <Button x:Name="btnUpdate" Content="Update" Width="107" Background="#FF1B7140" Foreground="Black" Click="btnUpdate_Click"/>
                 <Button x:Name="btnDelete" Content="Delete" Width="105" Foreground="Black" Background="#FFA2AA3D" Click="btnDelete_Click"/>
+                <Button x:Name="btnReportStatistic" Content="Report Statistic" Width="95" Background="#FF0099FF" Foreground="Black" Click="btnReportStatistic_Click"/>
                 <Button x:Name="btnClose" Content="Close" Width="107" Background="#FFEF8F18" Foreground="Black" Click="btnClose_Click"/>
             </StackPanel>
             <DataGrid x:Name="dgvAccountList" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" MouseDoubleClick="dgAccountList_MouseDoubleClick" IsReadOnly="True"/>

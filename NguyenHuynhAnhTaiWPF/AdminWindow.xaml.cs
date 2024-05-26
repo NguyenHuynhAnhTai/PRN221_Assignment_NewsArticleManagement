@@ -12,13 +12,16 @@ namespace NguyenHuynhAnhTaiWPF
     {
         private readonly ISystemAccountService iSystemAccountService;
         private readonly AccountDetailWindow accountDetailWindow;
+        private readonly ReportStatisticWindow reportStatisticWindow;
 
         public AdminWindow(ISystemAccountService iSystemAccountService, 
-                            AccountDetailWindow accountDetailWindow)
+                            AccountDetailWindow accountDetailWindow,
+                            ReportStatisticWindow reportStatisticWindow)
         {
             InitializeComponent();
             this.iSystemAccountService = iSystemAccountService;
             this.accountDetailWindow = accountDetailWindow;
+            this.reportStatisticWindow = reportStatisticWindow;
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -174,6 +177,14 @@ namespace NguyenHuynhAnhTaiWPF
             txtRole.Text = "";
             dgvAccountList.SelectedItem = null;
             txtSearch.Text = "";
+        }
+
+        private void btnReportStatistic_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            reportStatisticWindow.ShowDialog();
+            if (reportStatisticWindow.IsActive == false)
+                this.Show();
         }
     }
 }
