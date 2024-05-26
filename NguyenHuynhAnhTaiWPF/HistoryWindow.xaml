@@ -1,0 +1,16 @@
+﻿<Window x:Class="NguyenHuynhAnhTaiWPF.HistoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NguyenHuynhAnhTaiWPF"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="HistoryWindow" Height="450" Width="800"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip" Activated="Window_Activated">
+    <Grid>
+        <DataGrid x:Name="dgvNewsHistory" Margin="10,10,10,49" IsReadOnly="True"/>
+        <Button x:Name="btnClose" Content="Close" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Click="btnClose_Click" Width="82" Height="34"/>
+    </Grid>
+</Window>

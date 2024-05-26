@@ -16,17 +16,20 @@ namespace NguyenHuynhAnhTaiWPF
         private readonly UpdateAccountWindow updateAccountWindow;
         private readonly NewsArticleManagementWindow newsArticleManagementWindow;
         private readonly CategoryManagementWindow categoryManagementWindow;
+        private readonly HistoryWindow historyWindow;
 
         public MainWindow(ISystemAccountService systemAccountService,
                             UpdateAccountWindow updateAccountWindow,
                             NewsArticleManagementWindow newsArticleManagementWindow,
-                            CategoryManagementWindow categoryManagementWindow)
+                            CategoryManagementWindow categoryManagementWindow,
+                            HistoryWindow historyWindow)
         {
             InitializeComponent();
             iSystemAccountService = systemAccountService;
             this.updateAccountWindow = updateAccountWindow;
             this.newsArticleManagementWindow = newsArticleManagementWindow;
             this.categoryManagementWindow = categoryManagementWindow;
+            this.historyWindow = historyWindow;
         }
 
         private void LoadData()
@@ -78,6 +81,14 @@ namespace NguyenHuynhAnhTaiWPF
             this.Hide();
             categoryManagementWindow.ShowDialog();
             if (categoryManagementWindow.IsActive == false)
+                this.Show();
+        }
+
+        private void btnHistory_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            historyWindow.ShowDialog();
+            if (historyWindow.IsActive == false)
                 this.Show();
         }
     }
