@@ -38,7 +38,7 @@ namespace NguyenHuynhAnhTaiWPF
                 }
                 if (iTagService.GetTagById(tagId) is not null)
                 {
-                    MessageBox.Show("Tag name already exists!", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Tag id already exists!", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 var addTag = new Tag();
