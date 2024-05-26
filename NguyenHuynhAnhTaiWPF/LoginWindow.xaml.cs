@@ -61,6 +61,13 @@ namespace NguyenHuynhAnhTaiWPF
                         mainWindow.Show();
                         return;
                     }
+                    else
+                    {
+                        MessageBox.Show("You do not have permission!", "Warning",
+                                                                    MessageBoxButton.OK,
+                                                                    MessageBoxImage.Error);
+                        return;
+                    }
                 }
                 MessageBox.Show("Email or password is incorrect", "Warning",
                                  MessageBoxButton.OK,
